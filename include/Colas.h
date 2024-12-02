@@ -3,6 +3,7 @@
 
 #include "Estructuras.h"
 #include <iostream>
+using namespace std;
 
 // Nodo para la cola de luchadores
 struct NodoCola {
@@ -35,7 +36,7 @@ void encolar(Cola& cola, Luchador luchador) {
 // Desencolar un luchador
 Luchador desencolar(Cola& cola) {
     if (!cola.frente) {
-        std::cerr << "Cola vacía.\n";
+        cerr << "Cola vacía.\n";
         exit(1);
     }
     NodoCola* temp = cola.frente;
@@ -46,18 +47,23 @@ Luchador desencolar(Cola& cola) {
     return luchador;
 }
 
-// Mostrar cola de luchadores
+// Mostrar cola de luchadores con índices
 void mostrarCola(Cola& cola) {
     NodoCola* actual = cola.frente;
+    int index = 0; // Variable para llevar el índice
+
     if (!actual) {
-        std::cout << "Cola vacía.\n";
+        cout << "Cola vacía.\n";
         return;
     }
+
     while (actual) {
-        std::cout << "Luchador: " << actual->luchador.nombre
-                  << " | Poder: " << actual->luchador.poder << '\n';
+        cout << "[" << index << "] Luchador: " << actual->luchador.nombre
+             << " | Poder: " << actual->luchador.poder << '\n';
         actual = actual->siguiente;
+        index++; // Incrementar el índice para el siguiente luchador
     }
 }
+
 
 #endif // COLAS_H

@@ -3,7 +3,7 @@
 
 #include "Estructuras.h"
 #include <iostream>
-
+using namespace std;
 // Nodo para la pila de luchadores
 struct NodoPilaLuchador {
     Luchador luchador;
@@ -24,7 +24,7 @@ void pushPilaLuchador(NodoPilaLuchador*& pila, Luchador luchador) {
 
 Luchador popPilaLuchador(NodoPilaLuchador*& pila) {
     if (!pila) {
-        std::cerr << "Pila vacía.\n";
+        cerr << "Pila vacía.\n";
         exit(1);
     }
     NodoPilaLuchador* temp = pila;
@@ -36,11 +36,11 @@ Luchador popPilaLuchador(NodoPilaLuchador*& pila) {
 
 void mostrarPilaLuchadores(NodoPilaLuchador* pila) {
     if (!pila) {
-        std::cout << "Pila vacía.\n";
+        cout << "Pila vacía.\n";
         return;
     }
     while (pila) {
-        std::cout << "Luchador: " << pila->luchador.nombre
+        cout << "Luchador: " << pila->luchador.nombre
                   << " | Poder: " << pila->luchador.poder << '\n';
         pila = pila->siguiente;
     }
@@ -54,7 +54,7 @@ void pushPilaUniverso(NodoPilaUniverso*& pila, Universo universo) {
 
 Universo popPilaUniverso(NodoPilaUniverso*& pila) {
     if (!pila) {
-        std::cerr << "Pila vacía.\n";
+        cerr << "Pila vacía.\n";
         exit(1);
     }
     NodoPilaUniverso* temp = pila;
@@ -64,16 +64,41 @@ Universo popPilaUniverso(NodoPilaUniverso*& pila) {
     return universo;
 }
 
+// Eliminar luchadores y apilarlos
+void eliminarLuchador(NodoPilaLuchador*& pila, Universo& universo, int index) {
+    if (index < 0 || index >= universo.cantidadLuchadores) {
+        cout << "Índice de luchador inválido.\n";
+        return;
+    }
+
+    pushPilaLuchador(pila, universo.luchadores[index]);
+    for (int i = index; i < universo.cantidadLuchadores - 1; ++i) {
+        universo.luchadores[i] = universo.luchadores[i + 1];
+    }
+    --universo.cantidadLuchadores;
+    cout << "Luchador eliminado y apilado.\n";
+}
+
+// Mostrar y vaciar pila de luchadores eliminados
+void vaciarPilaLuchadores(NodoPilaLuchador*& pila) {
+    while (pila) {
+        Luchador eliminado = popPilaLuchador(pila);
+        cout << "Luchador eliminado de la pila: " << eliminado.nombre << '\n';
+    }
+}
+
+
 void mostrarPilaUniversos(NodoPilaUniverso* pila) {
     if (!pila) {
-        std::cout << "Pila vacía.\n";
+        cout << "Pila vacía.\n";
         return;
     }
     while (pila) {
-        std::cout << "Universo: " << pila->universo.nombre
+        cout << "Universo: " << pila->universo.nombre
                   << " | Poder Total: " << pila->universo.poderTotal << '\n';
         pila = pila->siguiente;
     }
 }
+
 
 #endif // PILAS_H

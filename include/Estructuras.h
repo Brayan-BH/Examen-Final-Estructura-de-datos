@@ -20,6 +20,7 @@ struct Universo {
     char dios[30];           // Nombre del dios del universo
     char angel[30];          // Nombre del ángel del universo
     Luchador* luchadores;    // Lista dinámica de luchadores
+    char lider[30];
 };
 
 #endif // ESTRUCTURAS_H
